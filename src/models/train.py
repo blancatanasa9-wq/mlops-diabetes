@@ -118,7 +118,6 @@ def run_experiment(
     y_test: pd.Series,
 ) -> None:
     """Train a model and log everything to a single MLflow run.
-    
     The run name follows the convention: {model_type}_{YYYYMMDD_HHMMSS}
     so runs are identifiable at a glance in the UI.
     """
@@ -142,7 +141,6 @@ def run_experiment(
         y_pred = model.predict(X_test)
         metrics = compute_metrics(y_test, y_pred)
         mlflow.log_metrics(metrics)
-
         logger.info(
             "[%s] Metrics -> RMSE: %.4f | MAE: %.4f | R2: %.4f",
             model_type,
@@ -152,9 +150,12 @@ def run_experiment(
         )
 
         # Log trained model artifact
-        mlflow.sklearn.log_model(model, "model")
+       mlflow.sklearn.log_model(
+            sk_model=model,
+            artifact_path="model",
+            registered_model_name=None
+        )
         logger.info("[%s] Model logged to MLflow successfully.", model_type)
-
 # ..............................................................................
 # Main
 # ..............................................................................
