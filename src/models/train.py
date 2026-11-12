@@ -163,7 +163,7 @@ def run_experiment(
 
 def main() -> None:
     """Run the full experiment tracking pipeline for both models."""
-    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI.as_uri())
+    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
     mlflow.set_experiment(EXPERIMENT_NAME)
     
     logger.info("MLflow tracking URI: %s", MLFLOW_TRACKING_URI)
