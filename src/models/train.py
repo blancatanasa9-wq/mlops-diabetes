@@ -21,7 +21,7 @@ from sklearn.model_selection import train_test_split
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 INPUT_PATH = BASE_DIR / "data" / "processed" / "diabetes_features.csv"
-MLFLOW_TRACKING_URI = BASE_DIR / "mlruns"
+MLFLOW_TRACKING_URI = "sqlite:///mlflow.db"
 
 EXPERIMENT_NAME = "diabetes-regression"
 TARGET = "target"  # Columna objetivo para el dataset de diabetes
