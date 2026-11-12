@@ -150,10 +150,11 @@ def run_experiment(
         )
 
         # Log trained model artifact
-        mlflow.sklearn.log_model(
+       mlflow.sklearn.log_model(
             sk_model=model,
             artifact_path="model",
-            registered_model_name=None
+            registered_model_name=None,
+            skops_trusted_types=["sklearn.tree._tree.Tree"]
         )
         logger.info("[%s] Model logged to MLflow successfully.", model_type)
 
