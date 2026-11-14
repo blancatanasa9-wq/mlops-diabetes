@@ -131,15 +131,15 @@ python src/models/register_model.py
 python src/models/evaluate_model.py
 ```
 
-## 👑 Champion Model Selection
+## 👑 Champion Model Selection & Quality Gates
 
-The model selection process is fully automated via evaluation scripts (`evaluate_model.py`):
+The model selection process is fully automated via evaluation scripts (`evaluate_model.py`) and governed by strict **Quality Gates**:
 
-1. Candidate models are trained and logged under MLflow.
-
-2. Evaluation metrics (such as RMSE or $R^2$) are computed against a holdout test set.
-
-3. The model meeting or exceeding predefined **Quality Gates** is automatically assigned the MLflow alias **`@champion`** so the production API always fetches the best available version dynamically.
+1. **Candidate Evaluation:** All trained models are evaluated on a holdout test dataset.
+2. **Quality Gate Threshold (`MIN_R2_THRESHOLD = 0.25`):** A candidate model is *only* promoted to **`@champion`** status if its coefficient of determination ($R^2$) meets or exceeds the defined threshold:
+   * **$R^2 \ge 0.25$**
+   * *Rationale:* This ensures that any model promoted to production must explain at least 25% of the variance in diabetes progression, filtering out underperforming or trivial baseline models.
+3. **MLflow Alias Assignment:** Once a model passes this quality gate, it is automatically tagged with the MLflow alias **`@champion`**, ensuring the FastAPI serving layer always fetches the best available version dynamically.
 
 ## 🚀 Running the API
 
