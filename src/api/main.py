@@ -54,13 +54,8 @@ app = FastAPI(
 
 @app.get("/health", tags=["Monitoring"])
 def health() -> dict:
-    """Return service liveness and the registered model name."""
-    model_loaded = _state.get("model") is not None
-    return {
-        "status": "healthy" if model_loaded else "degraded",
-        "model_name": REGISTERED_MODEL_NAME,
-        "model_version": _state.get("model_version"),
-    }
+    """Return service liveness."""
+    return {"status": "ok"}
 
 
 @app.get("/model-info", tags=["Monitoring"])
