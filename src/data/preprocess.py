@@ -5,7 +5,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-# Definición de rutas basadas en la estructura del profesor (subiendo 2 niveles desde src/data/)
 BASE_DIR = Path(__file__).resolve().parents[2]
 RAW_PATH = BASE_DIR / "data" / "raw" / "diabetes_raw.csv"
 PROCESSED_PATH = BASE_DIR / "data" / "processed" / "diabetes_clean.csv"
