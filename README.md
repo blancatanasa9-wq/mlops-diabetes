@@ -162,15 +162,22 @@ You can test the core endpoints directly via Swagger UI or using `curl`:
    * **Response:** `{"status": "ok"}`
 
 2. **Model Info (`GET /model-info`):**
-
-   * Returns active model metadata (name, version, run ID).
+   * **Purpose:** Shows which model is currently being served in production, providing full traceability back to MLflow.
+   * **Expected Response:** Returns active champion model metadata including name, version, alias, run ID, and tracking URI.
+   * **Response:**
+     ```json
+     {
+       "registered_model_name": "DiabetesBestRegressor",
+       "alias": "champion",
+       "model_version": "1",
+       "run_id": "3303a1a9273f495391b08e8805f01e72",
+       "tracking_uri": "sqlite:///mlflow.db"
+     }
+     ```
 
 3. **Prediction (`POST /predict`):**
-
-   * Sends patient features to get a progression prediction.
-
+   * **Purpose:** Sends standardized patient features to get a diabetes progression prediction from the champion model.
    * **Example Payload:**
-
      ```json
      {
        "age": 0.038,
