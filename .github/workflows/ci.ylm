@@ -7,37 +7,45 @@ on:
       - master
 
 jobs:
-    pipeline:
-      runs-on: ubuntu-latest
-      steps:
-        # 1. Descargar los archivos del repositorio en el servidor de GitHub
-        - name: Checkout code
-          uses: actions/checkout@v4
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Descargar los archivos del repositorio en el servidor de GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        # 2. Configurar la versión de Python utilizada en el desarrollo
-        - name: Set up Python 3.11
-          uses: actions/setup-python@v5
-          with:
-            python-version: "3.11"
+      # 2. Configurar la versión de Python utilizada en el desarrollo
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-        # 3. Instalar las dependencias del proyecto
-        - name: Install dependencies
-          run: |
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
+      # 3. Instalar las dependencias del proyecto
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-        # 4. Generar o cargar el dataset procesado de diabetes
-        - name: Prepare features
-          run: python src/data/make_dataset.py  # (O el nombre de tu script de datos)
+      # 4. Generar o cargar el dataset procesado de diabetes
+      - name: Load data
+        run: python src/data/load_data.py
 
-        # 5. Entrenar los modelos (LinearRegression y RandomForest) y registrar en MLflow
-        - name: Train models
-          run: python src/models/train.py
+      - name: Validate data
+        run: python src/data/validate_data.py
 
-        # 6. Registrar el mejor modelo en el Model Registry
-        - name: Register model
-          run: python src/models/register_model.py
+      - name: Preprocess and Feature Engineering
+        run: |
+          python src/data/preprocess.py
+          python src/data/feature_engineering.py
 
-        # 7. Evaluar el modelo contra los Quality Gates y asignar el alias champion
-        - name: Evaluate model
-          run: python src/models/evaluate_model.py
+      # 5. Entrenar los modelos y registrar en MLflow
+      - name: Train models
+        run: python src/models/train.py
+
+      # 6. Registrar el mejor modelo en el Model Registry
+      - name: Register model
+        run: python src/models/register_model.py
+
+      # 7. Evaluar el modelo contra los Quality Gates y asignar el alias champion
+      - name: Evaluate model
+        run: python src/models/evaluate_model.py
