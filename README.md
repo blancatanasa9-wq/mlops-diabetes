@@ -77,8 +77,8 @@ mlops-diabetes-main/
 1. **Clone the repository:**
 
    ```bash
-   git clone <your-repository-url>
-   cd mlops-diabetes-main
+   git clone https://github.com/blancatanasa9-wq/mlops-diabetes.git
+   cd mlops-diabetes
    ```
 
 2. **Create and activate a Python virtual environment (Python 3.11):**
