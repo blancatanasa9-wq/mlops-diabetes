@@ -69,6 +69,13 @@ def predict(features: DiabetesFeatures) -> PredictionResponse:
     """Receive patient features and return the diabetes progression prediction."""
     model = get_model()
 
+    # Si el modelo no está cargado en memoria, lanzamos un 503 Service Unavailable
+    if model is None:
+        raise HTTPException(
+            status_code=503, 
+            detail="Model not loaded or service unavailable"
+        )
+
     try:
         # Convertimos los datos de entrada a DataFrame de Pandas
         input_data = pd.DataFrame([features.dict()])
