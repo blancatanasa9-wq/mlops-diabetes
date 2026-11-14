@@ -4,7 +4,6 @@ from pathlib import Path
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
-# Definición de rutas basadas en la estructura del profesor (subiendo 2 niveles desde src/data/)
 BASE_DIR = Path(__file__).resolve().parents[2]
 INPUT_PATH = BASE_DIR / "data" / "processed" / "diabetes_clean.csv"
 OUTPUT_PATH = BASE_DIR / "data" / "processed" / "diabetes_features.csv"
